@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CounterCard extends StatefulWidget {
-  final BehaviorSubject<int> counter;
-  const CounterCard({super.key, required this.counter});
+  final Function(int c)? onCounterIncrement;
+  const CounterCard({super.key, this.onCounterIncrement,});
 
   @override
   State<CounterCard> createState() => _CounterCardState();
@@ -23,7 +22,9 @@ class _CounterCardState extends State<CounterCard> {
               onPressed: () {
                 setState(() {
                   _counter++;
-                  widget.counter.add(widget.counter.value + 1);
+                  if (widget.onCounterIncrement != null) {
+                    widget.onCounterIncrement!(_counter);
+                  }
                 });
               },
               child: const Text('Click Me'),

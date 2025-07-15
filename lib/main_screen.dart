@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:stful_task/counter_card.dart';
-
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -10,27 +8,24 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final BehaviorSubject<int> counterSum = BehaviorSubject.seeded(0);
   int sum = 0;
+  void counterIncremented(int c) {
+    setState(() {
+      sum += 1;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-   
-    counterSum.stream.listen((value) {
-      setState(() {
-        sum = value;
-      });
-    });
-
     return Scaffold(
       body: Center(
         child: Column(
           spacing: 16,
           children: [
-            CounterCard(counter: counterSum),
-            CounterCard(counter: counterSum),
-            CounterCard(counter: counterSum),
-            CounterCard(counter: counterSum),
-            CounterCard(counter: counterSum),
+            CounterCard(onCounterIncrement: counterIncremented),
+            CounterCard(onCounterIncrement: counterIncremented),
+            CounterCard(onCounterIncrement: counterIncremented),
+            CounterCard(onCounterIncrement: counterIncremented),
+            CounterCard(onCounterIncrement: counterIncremented),
             Text("Summe: $sum")
           ],
         ),
